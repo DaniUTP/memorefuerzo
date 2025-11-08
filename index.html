@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MemoRefuerzo - Juego de Memoria</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <header class="floating">
+            <h1><i class="fas fa-brain"></i> MemoRefuerzo</h1>
+            <p class="subtitle">Fortalece tu memoria de trabajo</p>
+        </header>
+
+        <main>
+            <div id="welcome-screen" class="screen active">
+                <h2><i class="fas fa-home"></i> Bienvenido a MemoRefuerzo</h2>
+                <p>Este juego está diseñado para fortalecer tu memoria de trabajo basándose en principios psicológicos.</p>
+                
+                
+                <div class="points-display">
+                    <i class="fas fa-coins"></i> Puntos: <span id="points-value" class="points-value">0</span>
+                </div>
+                 <div class="team-section">
+                    <h3><i class="fas fa-users"></i> Equipo de Desarrollo</h3>
+                    <p>Este juego fue desarrollado por:</p>
+                    
+                    <div class="team-grid">
+                        <div class="team-member">
+                            <div class="member-avatar">
+                                <i class="fas fa-user"></i>
+                            </div>
+                            <div class="member-name">Gerardo Daniel Aldana Leiva</div>
+                        </div>
+                        <div class="team-member">
+                            <div class="member-avatar">
+                                <i class="fas fa-user"></i>
+                            </div>
+                            <div class="member-name">Mathias Sebastian Villavicencio Viacava</div>
+                        </div>
+                        <div class="team-member">
+                            <div class="member-avatar">
+                                <i class="fas fa-user"></i>
+                            </div>
+                            <div class="member-name">Alessandro Del Piero Mautino Sale</div>
+                        </div>
+                    </div>
+                </div>
+            
+                <div style="text-align: center; margin-top: 20px;">
+                    <button id="start-btn" class="btn-primary">
+                        <i class="fas fa-play"></i> Comenzar Juego
+                    </button>
+                    <button id="shop-btn" class="btn-secondary">
+                        <i class="fas fa-store"></i> Tienda
+                    </button>
+                </div>
+            </div>
+
+            <div id="level-select-screen" class="screen">
+                <h2><i class="fas fa-layer-group"></i> Selecciona el Nivel</h2>
+                <div class="points-display">
+                    <i class="fas fa-coins"></i> Puntos: <span id="level-points" class="points-value">0</span>
+                </div>
+                
+                <div class="level-options">
+                    <div class="level-card floating" data-level="1" style="animation-delay: 0s;">
+                        <h3><i class="fas fa-seedling"></i> Fácil</h3>
+                        <p>4 cartas</p>
+                        <p><strong>+10 puntos</strong></p>
+                    </div>
+                    <div class="level-card floating" data-level="2" style="animation-delay: 0.2s;">
+                        <h3><i class="fas fa-tree"></i> Medio</h3>
+                        <p>8 cartas</p>
+                        <p><strong>+25 puntos</strong></p>
+                    </div>
+                    <div class="level-card floating" data-level="3" style="animation-delay: 0.4s;">
+                        <h3><i class="fas fa-mountain"></i> Difícil</h3>
+                        <p>12 cartas</p>
+                        <p><strong>+50 puntos</strong></p>
+                    </div>
+                </div>
+                <div style="text-align: center;">
+                    <button id="back-btn" class="btn-secondary">
+                        <i class="fas fa-arrow-left"></i> Volver
+                    </button>
+                    <button id="shop-btn-2" class="btn-primary">
+                        <i class="fas fa-store"></i> Tienda
+                    </button>
+                </div>
+            </div>
+
+            <div id="game-screen" class="screen">
+                <div class="game-header">
+                    <div class="stats">
+                        <span><i class="fas fa-sync-alt"></i> Mov: <span id="moves-count">0</span></span>
+                        <span><i class="fas fa-clock"></i> Tiempo: <span id="timer">0</span>s</span>
+                        <span><i class="fas fa-coins"></i> Puntos: <span id="game-points">0</span></span>
+                    </div>
+                    <button id="restart-btn" class="btn-secondary">
+                        <i class="fas fa-redo"></i> Reiniciar
+                    </button>
+                </div>
+                <div id="game-board" class="game-board"></div>
+            </div>
+
+            <div id="results-screen" class="screen">
+                <h2><i class="fas fa-trophy"></i> ¡Juego Completado!</h2>
+                <div class="points-display pulse">
+                    <i class="fas fa-star"></i> ¡Ganaste <span id="earned-points">0</span> puntos! <i class="fas fa-star"></i>
+                </div>
+                <div class="results-stats">
+                    <p><i class="fas fa-layer-group"></i> Nivel: <span id="result-level"></span></p>
+                    <p><i class="fas fa-sync-alt"></i> Movimientos: <span id="result-moves"></span></p>
+                    <p><i class="fas fa-clock"></i> Tiempo: <span id="result-time"></span>s</p>
+                    <p><i class="fas fa-chart-line"></i> Eficiencia: <span id="result-efficiency"></span>%</p>
+                </div>
+                <div class="results-actions">
+                    <button id="play-again-btn" class="btn-primary">
+                        <i class="fas fa-redo"></i> Jugar Otra Vez
+                    </button>
+                    <button id="new-level-btn" class="btn-secondary">
+                        <i class="fas fa-layer-group"></i> Nuevo Nivel
+                    </button>
+                    <button id="shop-btn-3" class="btn-primary">
+                        <i class="fas fa-store"></i> Tienda
+                    </button>
+                </div>
+            </div>
+
+            <div id="shop-screen" class="screen">
+                <h2><i class="fas fa-store"></i> Tienda de Habilidades</h2>
+                <div class="points-display">
+                    <i class="fas fa-coins"></i> Puntos disponibles: <span id="shop-points" class="points-value">0</span>
+                </div>
+                
+                <div id="purchase-message" class="purchase-message" style="display: none;"></div>
+                
+                <div class="shop-section">
+                    <div class="abilities-grid" id="abilities-grid">
+                    </div>
+                </div>
+                
+                <div style="text-align: center; margin-top: 20px;">
+                    <button id="back-from-shop" class="btn-secondary">
+                        <i class="fas fa-arrow-left"></i> Volver al Menú
+                    </button>
+                </div>
+            </div>
+        </main>
+
+        <footer>
+            <p><i class="fas fa-brain"></i> MemoRefuerzo - Basado en principios de psicología cognitiva</p>
+        </footer>
+    </div>
+<script src="script.js"></script>
+</body>
+</html>
