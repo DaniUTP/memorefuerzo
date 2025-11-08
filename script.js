@@ -1,3 +1,4 @@
+// Variables globales del juego
         let gameState = {
             currentScreen: 'welcome',
             level: 1,
@@ -10,9 +11,11 @@
             gameStarted: false
         };
 
+        // Sistema de puntos
         let playerPoints = 0;
         let playerAbilities = [];
 
+        // Habilidades disponibles
         const abilities = [
             {
                 id: 'vision-rayos-x',
@@ -44,6 +47,21 @@
             }
         ];
 
+        // Sistema de sonidos
+        const sounds = {
+            inicio: new Audio('sonido/inicio.mp3'),
+            movCarta: new Audio('sonido/movCarta.mp3'),
+            result: new Audio('sonido/result.mp3'),
+            buy: new Audio('sonido/buy.mp3')
+        };
+
+        // Configurar sonidos
+        Object.values(sounds).forEach(sound => {
+            sound.preload = 'auto';
+            sound.volume = 0.7;
+        });
+
+        // Inicialización del juego
         document.addEventListener('DOMContentLoaded', function() {
             console.log("🎮 Inicializando MemoRefuerzo...");
             
@@ -51,7 +69,12 @@
             updatePointsDisplay();
             loadAbilities();
             
-            document.getElementById('start-btn').addEventListener('click', showLevelSelect);
+            // Event listeners con sonidos
+            document.getElementById('start-btn').addEventListener('click', function() {
+                sounds.inicio.play();
+                showLevelSelect();
+            });
+            
             document.getElementById('shop-btn').addEventListener('click', showShop);
             document.getElementById('shop-btn-2').addEventListener('click', showShop);
             document.getElementById('shop-btn-3').addEventListener('click', showShop);
@@ -61,9 +84,9 @@
             document.getElementById('play-again-btn').addEventListener('click', playAgain);
             document.getElementById('new-level-btn').addEventListener('click', showLevelSelect);
             
+            // Niveles
             const levelCards = document.querySelectorAll('.level-card');
             levelCards.forEach((card, index) => {
-
                 if (!card.hasAttribute('data-level')) {
                     card.setAttribute('data-level', index + 1);
                 }
@@ -78,6 +101,7 @@
             console.log("✅ Juego inicializado - Puntos: 0");
         });
 
+        // Funciones de navegación
         function showScreen(screenId) {
             document.querySelectorAll('.screen').forEach(screen => {
                 screen.classList.remove('active');
@@ -97,9 +121,13 @@
             document.getElementById('level-points').textContent = playerPoints;
         }
         function showGame() { showScreen('game-screen'); }
-        function showResults() { showScreen('results-screen'); }
+        function showResults() { 
+            showScreen('results-screen');
+            sounds.result.play(); // Sonido al mostrar resultados
+        }
         function showShop() { showScreen('shop-screen'); }
 
+        // Funciones del juego
         function startGame(level) {
             console.log("🎯 Iniciando nivel", level);
             
@@ -209,6 +237,9 @@
                 gameState.gameStarted = true;
             }
 
+            // Sonido al mover carta
+            sounds.movCarta.play();
+            
             cardData.flipped = true;
             card.classList.add('flipped');
             card.textContent = cardData.symbol;
@@ -388,6 +419,9 @@
                     updatePointsDisplay();
                     updateShopPoints();
                     loadAbilities();
+                    
+                    // Sonido al comprar habilidad
+                    sounds.buy.play();
                     
                     showPurchaseMessage('¡Habilidad comprada exitosamente!', 'success');
                     console.log("✅ Habilidad comprada:", abilityId);
